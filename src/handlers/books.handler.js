@@ -146,8 +146,31 @@ const editBookById = (request, h) => {
     h,
     message: 'Gagal memperbarui buku. Id tidak ditemukan',
     statusCode: 404,
-    status: 'faile',
+    status: 'fail',
   });
 };
 
-module.exports = { addBook, getBooks, getBookById, editBookById };
+const deleteBookById = (request, h) => {
+  const { id } = request.params;
+  const index = books.findIndex((book) => book.id === id);
+
+  if (index !== -1) {
+    books.splice(index, 1);
+
+    return response({
+      h,
+      message: 'Buku berhasil dihapus',
+      statusCode: 200,
+      status: 'success',
+    });
+  }
+
+  return response({
+    h,
+    message: 'Buku gagal dihapus. Id tidak ditemukan',
+    statusCode: 404,
+    status: 'fail',
+  });
+};
+
+module.exports = { addBook, getBooks, getBookById, editBookById, deleteBookById };
