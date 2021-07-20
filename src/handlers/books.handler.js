@@ -2,6 +2,11 @@ const { nanoid } = require('nanoid');
 const { books } = require('../models/books');
 const response = require('../utils/response.util');
 
+const getBookIndex = (books, id) => {
+  const index = books.findIndex((book) => book.id === id); // if it returns -1, indicating that no element
+  return index;
+};
+
 const addBook = (request, h) => {
   try {
     const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
@@ -102,7 +107,7 @@ const editBookById = (request, h) => {
   const { id } = request.params; //get id params
   const { name, year, author, summary, publisher, pageCount, readPage, reading } = request.payload;
   const updatedAt = new Date().toISOString();
-  const index = books.findIndex((book) => book.id === id); // if it returns -1, indicating that no element
+  const index = getBookIndex(books, id);
 
   if (index !== -1) {
     if (!name) {
@@ -152,7 +157,7 @@ const editBookById = (request, h) => {
 
 const deleteBookById = (request, h) => {
   const { id } = request.params;
-  const index = books.findIndex((book) => book.id === id);
+  const index = getBookIndex(books, id);
 
   if (index !== -1) {
     books.splice(index, 1);
