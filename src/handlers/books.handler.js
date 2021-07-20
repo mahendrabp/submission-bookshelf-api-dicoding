@@ -56,4 +56,22 @@ const addBook = (request, h) => {
   }
 };
 
-module.exports = { addBook };
+const getBooks = (request, h) => {
+  let dataBooks = books;
+
+  return response({
+    h,
+    message: 'Buku berhasil ditampilkan',
+    statusCode: 200,
+    status: 'success',
+    data: {
+      books: dataBooks.map((dataBook) => ({
+        id: dataBook.id,
+        name: dataBook.name,
+        publisher: dataBook.publisher,
+      })),
+    },
+  });
+};
+
+module.exports = { addBook, getBooks };
