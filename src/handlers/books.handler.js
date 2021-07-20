@@ -74,4 +74,28 @@ const getBooks = (request, h) => {
   });
 };
 
-module.exports = { addBook, getBooks };
+const getBookById = (request, h) => {
+  const { id } = request.params;
+  const filterBookId = books.filter((book) => book.id === id);
+
+  if (filterBookId.length > 0) {
+    return response({
+      h,
+      message: 'Buku ditemukan',
+      statusCode: 200,
+      status: 'success',
+      data: {
+        book: filterBookId,
+      },
+    });
+  }
+
+  return response({
+    h,
+    message: 'Buku tidak ditemukan',
+    statusCode: 404,
+    status: 'fail',
+  });
+};
+
+module.exports = { addBook, getBooks, getBookById };
