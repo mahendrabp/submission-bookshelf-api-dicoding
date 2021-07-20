@@ -3,8 +3,7 @@ const { books } = require('../models/books');
 const response = require('../utils/response.util');
 
 const getBookIndex = (books, id) => {
-  const index = books.findIndex((book) => book.id === id); // if it returns -1, indicating that no element
-  return index;
+  return books.findIndex((book) => book.id === id); // if it returns -1, indicating that is no element
 };
 
 const addBook = (request, h) => {
@@ -46,7 +45,6 @@ const addBook = (request, h) => {
     books.push(newBook);
 
     const isSuccess = books.filter((book) => book.id === id).length > 0;
-
     if (isSuccess) {
       return response({
         h,
@@ -63,6 +61,12 @@ const addBook = (request, h) => {
 
 const getBooks = (request, h) => {
   let dataBooks = books;
+  const { name, reading, finished } = request.query;
+
+  // query string
+  if (name) dataBooks = dataBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+  if (reading) dataBooks = dataBooks.filter((book) => book.reading == !!Number(reading));
+  if (finished) dataBooks = dataBooks.filter((book) => book.finished == !!Number(finished));
 
   return response({
     h,
@@ -90,7 +94,7 @@ const getBookById = (request, h) => {
       statusCode: 200,
       status: 'success',
       data: {
-        book: filterBookId,
+        book: filterBookId[0],
       },
     });
   }
