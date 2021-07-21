@@ -65,8 +65,8 @@ const getBooks = (request, h) => {
 
   // query string
   if (name) dataBooks = dataBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
-  if (reading) dataBooks = dataBooks.filter((book) => book.reading == !!Number(reading));
-  if (finished) dataBooks = dataBooks.filter((book) => book.finished == !!Number(finished));
+  if (reading) dataBooks = dataBooks.filter((book) => book.reading == Boolean(Number(reading)));
+  if (finished) dataBooks = dataBooks.filter((book) => book.finished == Boolean(Number(finished)));
 
   return response({
     h,

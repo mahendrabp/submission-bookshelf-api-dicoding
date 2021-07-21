@@ -6,13 +6,11 @@ const routes = [
     path: '/books',
     handler: addBook,
   },
-
   {
     method: 'GET',
     path: '/books',
     handler: getBooks,
   },
-
   {
     method: 'GET',
     path: '/books/{id}',
